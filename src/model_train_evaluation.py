@@ -1,5 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import joblib
+import os
 
 from ft_engineering import prepararDatos
 
@@ -128,6 +130,23 @@ def entrenarEvaluarModelos():
 
     results_df = pd.DataFrame(results).T
     results_df = results_df.sort_values(by="roc_auc", ascending=False)
+
+    # Seleccionar el mejor modelo según ROC-AUC
+    mejor_modelo_nombre = results_df.index[0]
+    mejor_modelo = models[mejor_modelo_nombre]
+
+    # Crear carpeta para modelos si no existe
+    ruta_actual = os.path.dirname(os.path.abspath(__file__))
+    ruta_proyecto = os.path.dirname(ruta_actual)
+    ruta_modelos = os.path.join(ruta_proyecto, "models")
+    os.makedirs(ruta_modelos, exist_ok=True)
+
+    # Guardar modelo entrenado
+    ruta_modelo = os.path.join(ruta_modelos, "best_model.pkl")
+    joblib.dump(mejor_modelo, ruta_modelo)
+
+    print(f"\nMejor modelo guardado: {mejor_modelo_nombre}")
+    print(f"Ruta del modelo: {ruta_modelo}")
 
     return results_df
 
