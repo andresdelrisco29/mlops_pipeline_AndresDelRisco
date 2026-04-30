@@ -59,7 +59,6 @@ mlops_pipeline_AndresDelRisco/
 ├── .dockerignore
 ├── .gitignore
 └── README.md
-```
 
 DESCRIPCIÓN DE ARCHIVOS PRINCIPALES
 src/cargar_datos.py
